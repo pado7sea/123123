@@ -1,13 +1,13 @@
-package com.ragtag.X10.model.dao;
-
-import java.util.*;
+package com.ragtag.X10.model.service;
 
 import com.ragtag.X10.model.dto.TodoList;
 
-public interface TodoDao {
-    List<TodoList> selectAll(String userId);
+import java.util.List;
 
+public interface TodoService {
     int insertTodo(TodoList todoList);
+
+    List<TodoList> selectAll(String userId);
 
     int updateTodo(TodoList todoList);
 

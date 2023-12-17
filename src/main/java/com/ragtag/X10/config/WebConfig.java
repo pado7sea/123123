@@ -17,10 +17,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
     }
 
-    // 등록할 인터셉터가 있다면
-    // 필드를 통해 의존성 주입 후
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // 여기서 등록하자
-    }
 }

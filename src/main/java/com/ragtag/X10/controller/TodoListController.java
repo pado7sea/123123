@@ -1,7 +1,7 @@
 package com.ragtag.X10.controller;
 
 import com.ragtag.X10.model.dto.TodoList;
-import com.ragtag.X10.service.TodoService;
+import com.ragtag.X10.model.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

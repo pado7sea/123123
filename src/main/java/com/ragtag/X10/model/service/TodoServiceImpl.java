@@ -1,11 +1,11 @@
-package com.ragtag.X10.service;
-
-import java.util.List;
+package com.ragtag.X10.model.service;
 
 import com.ragtag.X10.model.dao.TodoDao;
 import com.ragtag.X10.model.dto.TodoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
