@@ -74,9 +74,9 @@ CREATE TABLE IF NOT EXISTS `X10`.`Workbook` (
   `subjectId` INT NOT NULL,
   `workbookTitle` VARCHAR(45) NOT NULL,
   `workbookDetail` VARCHAR(200) NOT NULL,
-  `workbookDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `workbookDeadline` DATETIME NOT NULL,
   `workbookQuota` INT NOT NULL,
+  `workbookDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`workbookId`, `subjectId`),
   CONSTRAINT `fk_Workbook_Subject1`
     FOREIGN KEY (`subjectId`)
@@ -92,11 +92,13 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `X10`.`Question` (
   `questionId` INT NOT NULL AUTO_INCREMENT,
   `workbookId` INT NOT NULL,
-  `questionQ` VARCHAR(45) NOT NULL,
+  `questionQ` VARCHAR(100) NOT NULL,
   `questionA` VARCHAR(45) NOT NULL,
   `questionType` INT NOT NULL COMMENT '1 : 객관식\n2 : 단답형\n3 : O/X',
   `questionExplain` TEXT NOT NULL,
   `questionDifficulty` INT NOT NULL COMMENT '1 : 하\n2 : 중\n3 : 상',
+  `questionMaker` VARCHAR(45) NOT NULL,
+  `questionSave` TINYINT NULL DEFAULT 0 COMMENT '0 : 임시 저장\n1 : 저장\n',
   `questionImg` VARCHAR(450) NULL,
   PRIMARY KEY (`questionId`, `workbookId`),
   INDEX `fk_Quiz_Workbook1_idx` (`workbookId` ASC) VISIBLE,
@@ -153,9 +155,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `X10`.`userWorkbookQuota`
+-- Table `X10`.`UserWorkbookQuota`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `X10`.`userWorkbookQuota` (
+CREATE TABLE IF NOT EXISTS `X10`.`UserWorkbookQuota` (
   `userId` VARCHAR(45) NOT NULL,
   `workbookId` INT NOT NULL,
   `isSubmit` TINYINT NULL DEFAULT 0 COMMENT '0 : 아직 다 안냄\n1 : 다 냄',
@@ -203,6 +205,9 @@ CREATE TABLE IF NOT EXISTS `X10`.`QuizRoom` (
   `quizRoomWorkbookId` INT NOT NULL,
   `quizRoomTimeLimit` INT NOT NULL,
   `quizRoomSingly` TINYINT NULL DEFAULT 1 COMMENT '0 : 한번에 해설 보기\n1 : 문제별 해설 보기',
+  `quizRoomCreator` VARCHAR(45) NULL,
+  `quizRoomMaxNum` INT NULL,
+  `isStarted` TINYINT NULL DEFAULT 0 COMMENT '0 : 모집 중\n1 : 진행 중',
   PRIMARY KEY (`quizRoomId`))
 ENGINE = InnoDB;
 
@@ -211,10 +216,12 @@ ENGINE = InnoDB;
 -- Table `X10`.`UserQuizRoom`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `X10`.`UserQuizRoom` (
+  `userQuizRoomId` INT NOT NULL AUTO_INCREMENT,
   `userId` VARCHAR(45) NOT NULL,
   `quizRoomId` INT NOT NULL,
   `startTime` VARCHAR(45) NULL,
-  PRIMARY KEY (`userId`, `quizRoomId`),
+  `isReady` TINYINT NULL DEFAULT 0 COMMENT '0 : 준비 중\n1 : 준비 완료',
+  PRIMARY KEY (`userQuizRoomId`, `userId`, `quizRoomId`),
   INDEX `fk_table1_QuizRoom1_idx` (`quizRoomId` ASC) VISIBLE,
   INDEX `fk_table1_User1_idx` (`userId` ASC) VISIBLE,
   CONSTRAINT `fk_table1_QuizRoom1`
