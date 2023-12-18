@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.SubjectDao">
+
+    <!-- 과목 생성 -->
+    <insert id="createSubject" parameterType="Subject">
+        INSERT INTO Subject (subjectId, groupId, subjectTitle, subjectContent)
+        VALUES (#{subjectId}, #{groupId}, #{subjectTitle}, #{subjectContent});
+    </insert>
+
+    <!-- 그룹 내 과목 조회 -->
+    <select id="readAll" resultType="Subject" parameterType="int">
+        SELECT *
+        FROM Subject
+        WHERE groupId = #{groupId}
+    </select>
+
+    <!-- 과목 수정 -->
+    <update id="updateSubject" parameterType="Subject">
+        UPDATE Subject
+        SET subjectTitle = #{subjectTitle}, subjectContent = #{subjectContent}
+        WHERE subjectId = #{subjectId}
+    </update>
+
+    <!-- 과목 삭제 -->
+    <delete id="deleteSubject" parameterType="int">
+        DELETE FROM Subject
+        WHERE subjectId = #{subjectId}
+    </delete>
+</mapper>
