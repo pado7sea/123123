@@ -27,7 +27,7 @@ public class TodoListController {
     }
 
     @GetMapping("/AllTodo/{userId}")
-    public ResponseEntity<?> selectAll(@PathVariable String userId) {
+    public ResponseEntity<?> selectAll(@PathVariable("userId") String userId) {
         List<TodoList> todoList = todoService.selectAll(userId);
         if (todoList == null || todoList.isEmpty())
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -43,7 +43,7 @@ public class TodoListController {
     }
 
     @DeleteMapping("/delete/{todoId}")
-    public ResponseEntity<?> deleteTodo(@PathVariable int todoId) {
+    public ResponseEntity<?> deleteTodo(@PathVariable("todoId") int todoId) {
         int result = todoService.deleteTodo(todoId);
         if (result == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

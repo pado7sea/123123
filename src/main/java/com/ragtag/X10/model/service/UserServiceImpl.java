@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> searchUser(String userId) {
-        return userDao.selectByUserId(userId);
+    public List<User> searchUser(String keyword) {
+        return userDao.selectByUserId(keyword);
     }
 
     @Override
