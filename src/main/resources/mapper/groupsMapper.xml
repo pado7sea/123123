@@ -53,14 +53,14 @@
 
     <!--  그룹 삭제  -->
     <delete id="deleteGroups" parameterType="int">
-        <!-- 그룹과 관련된 데이터 삭제 -->
-        DELETE FROM `Question` WHERE `workbookId` IN (SELECT `workbookId` FROM `Workbook` WHERE `subjectId` IN (SELECT `subjectId` FROM `X10`.`Subject` WHERE `groupId` = #{groupId}));
-        DELETE FROM `Workbook` WHERE `subjectId` IN (SELECT `subjectId` FROM `Subject` WHERE `groupId` = #{groupId});
-        DELETE FROM `Subject` WHERE `groupId` = #{groupId};
-        DELETE FROM `GroupMember` WHERE `groupId` = #{groupId};
+<!--        &lt;!&ndash; 그룹과 관련된 데이터 삭제 &ndash;&gt;-->
+<!--        DELETE FROM `Question` WHERE `workbookId` IN (SELECT `workbookId` FROM `Workbook` WHERE `subjectId` IN (SELECT `subjectId` FROM `X10`.`Subject` WHERE `groupId` = #{groupId});-->
+<!--        DELETE FROM `Workbook` WHERE `subjectId` IN (SELECT `subjectId` FROM `Subject` WHERE `groupId` = #{groupId});-->
+<!--        DELETE FROM `Subject` WHERE `groupId` = #{groupId};-->
+<!--        DELETE FROM `GroupMember` WHERE `groupId` = #{groupId};-->
 
         <!-- 그룹 삭제 -->
-        DELETE FROM `Group` WHERE `groupId` = #{groupId};
+        DELETE FROM `Groups` WHERE `groupId` = #{groupId};
     </delete>
 
     <!--  그룹원 초대  -->
