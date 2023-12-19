@@ -1,8 +1,6 @@
 package com.ragtag.X10.controller;
 
-import com.ragtag.X10.model.dao.SubjectDao;
 import com.ragtag.X10.model.dto.Subject;
-import com.ragtag.X10.model.dto.TodoList;
 import com.ragtag.X10.model.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +14,10 @@ import java.util.List;
 @RequestMapping("/subject")
 public class SubjectController {
 
+    private final SubjectService subjectService;
+
     @Autowired
-    private SubjectService subjectService;
+    public SubjectController(SubjectService subjectService){  this.subjectService = subjectService; }
 
     // 1. 과목 생성
     @PostMapping("/create")
