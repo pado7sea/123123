@@ -1,7 +1,6 @@
 package com.ragtag.X10.model.dao;
 
 import com.ragtag.X10.model.dto.Subject;
-import com.ragtag.X10.model.dto.TodoList;
 
 import java.util.List;
 
