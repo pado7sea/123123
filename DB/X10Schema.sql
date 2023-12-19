@@ -200,6 +200,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `X10`.`QuizRoom` (
   `quizRoomId` INT NOT NULL AUTO_INCREMENT,
+  `groupId` INT NOT NULL,
   `quizRoomTitle` VARCHAR(45) NOT NULL,
   `quizRoomContent` VARCHAR(200) NOT NULL,
   `quizRoomWorkbookId` INT NOT NULL,
@@ -208,7 +209,13 @@ CREATE TABLE IF NOT EXISTS `X10`.`QuizRoom` (
   `quizRoomCreator` VARCHAR(45) NULL,
   `quizRoomMaxNum` INT NULL,
   `isStarted` TINYINT NULL DEFAULT 0 COMMENT '0 : 모집 중\n1 : 진행 중',
-  PRIMARY KEY (`quizRoomId`))
+  PRIMARY KEY (`quizRoomId`, `groupId`),
+  INDEX `fk_QuizRoom_Group1_idx` (`groupId` ASC) VISIBLE,
+  CONSTRAINT `fk_QuizRoom_Group1`
+    FOREIGN KEY (`groupId`)
+    REFERENCES `X10`.`Group` (`groupId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
