@@ -30,7 +30,7 @@ public class GroupsController {
 
     // 그룹 상세정보 조회
     @GetMapping("read/{groupId}")
-    public ResponseEntity<?> selectOne(@PathVariable int groupId) {
+    public ResponseEntity<?> selectOne(@PathVariable("groupId") int groupId) {
         List<Groups> groups = groupsService.selectOne(groupId);
 
         if (groups == null || groups.isEmpty())
@@ -40,7 +40,7 @@ public class GroupsController {
 
     // 유저 가입 그룹 전체 조회
     @GetMapping("readAll/{userId}")
-    public ResponseEntity<?> selectUserGroups(@PathVariable String userId) {
+    public ResponseEntity<?> selectUserGroups(@PathVariable("userId") String userId) {
         List<Groups> groups = groupsService.selectUserGroups(userId);
 
         if (groups == null || groups.isEmpty())
@@ -50,7 +50,7 @@ public class GroupsController {
 
     // 그룹 내 유저 전체 조회
     @GetMapping("readAllMember/{groupId}")
-    public ResponseEntity<?> selectAllUsers(@PathVariable int groupId) {
+    public ResponseEntity<?> selectAllUsers(@PathVariable("groupId") int groupId) {
         List<GroupMember> users = groupsService.selectAllUsers(groupId);
 
         if (users == null || users.isEmpty())
@@ -69,7 +69,7 @@ public class GroupsController {
 
     // 그룹 삭제
     @DeleteMapping("/delete/{groupId}")
-    public ResponseEntity<?> deleteGroups(@PathVariable int groupId) {
+    public ResponseEntity<?> deleteGroups(@PathVariable("groupId") int groupId) {
         int result = groupsService.deleteGroups(groupId);
         if (result == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -78,7 +78,7 @@ public class GroupsController {
 
     // 그룹원 초대
     @PostMapping("{groupId}/invite/{userId}")
-    public ResponseEntity<?> inviteUser(@PathVariable int groupId, @PathVariable String userId) {
+    public ResponseEntity<?> inviteUser(@PathVariable("groupId") int groupId, @PathVariable("userId") String userId) {
         int result = groupsService.inviteUser(groupId, userId);
 
         if (result == 0)
@@ -88,7 +88,7 @@ public class GroupsController {
 
     // 그룹원 탈퇴
     @DeleteMapping("{groupId}/delete/{userId}")
-    public ResponseEntity<?> quitGroup(@PathVariable int groupId, @PathVariable String userId) {
+    public ResponseEntity<?> quitGroup(@PathVariable("groupId") int groupId, @PathVariable("userId") String userId) {
         int result = groupsService.quitGroup(groupId, userId);
 
         if (result == 0)
