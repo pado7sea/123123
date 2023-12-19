@@ -10,6 +10,10 @@ public interface GroupsDao {
 
     int insertGroups(Groups groups); // 그룹 생성
 
+    String selectGroupLeader(int groupId); // 그룹 리더 아이디 조회
+
+    void insertGroupMember(@Param("groupId") int groupId, @Param("groupLeaderId") String groupLeaderId); // 그룹 멤버 추가
+
     List<Groups> selectOne(int groupId); // 그룹 상세정보 조회
 
     List<Groups> selectUserGroups(String userId); // 유저 가입 그룹 전체 조회

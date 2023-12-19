@@ -4,12 +4,22 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ragtag.X10.model.dao.GroupsDao">
     <!--  그룹 생성  -->
-    <insert id="insertGroups" parameterType="Groups">
-        INSERT INTO User
-        VALUES (0, #{groupLeaderId}, #{groupName}, #{groupDetail}, null);
+    <insert id="insertGroups" parameterType="Groups" useGeneratedKeys="true" keyProperty="groupId">
+        INSERT INTO `group` (groupId, groupLeaderId, groupName, groupDetail, groupImg)
+        VALUES (0, #{groupLeaderId}, #{groupName}, #{groupDetail}, null)
+    </insert>
 
-        INSERT INTO GroupMember
-        VALUES (#{groupLeaderId}, last_insert_id(), 0);
+    <!--  그룹 리더 아이디 조회  -->
+    <select id="selectGroupLeader" resultType="String" parameterType="int">
+        SELECT groupLeaderId
+        FROM `group`
+        WHERE groupId = #{groupId};
+    </select>
+
+    <!-- 그룹 멤버 추가 -->
+    <insert id="insertGroupMember">
+        INSERT INTO GroupMember (userId, groupId, isOnline)
+        VALUES (#{groupLeaderId}, #{groupId}, 0)
     </insert>
 
     <!--  그룹 상세정보 조회  -->
@@ -54,15 +64,15 @@
     </delete>
 
     <!--  그룹원 초대  -->
-    <insert id="inviteUser" parameterType="com.ragtag.X10.model.dto.GroupMember">
-        INSERT INTO GroupMember
-        VALUES (#{userId}, groupId, 0);
+    <insert id="inviteUser">
+        INSERT INTO GroupMember (userId, groupId, isOnline)
+        VALUES (#{userId}, #{groupId}, 0);
     </insert>
 
     <!--  그룹원 탈퇴  -->
-    <delete id="quitGroup" parameterType="com.ragtag.X10.model.dto.GroupMember">
+    <delete id="quitGroup">
         DELETE FROM GroupMember
-        WHERE userId = #{userId} AND groupId = #{groupID};
+        WHERE userId = #{userId} AND groupId = #{groupId};
     </delete>
 
 </mapper>

@@ -19,9 +19,9 @@ public class GroupsController {
     private GroupsService groupsService;
 
     // 그룹 생성
-    @PostMapping("/read/{groupId}")
-    public ResponseEntity<?> newGroup(@RequestBody Groups group) {
-        int result = groupsService.insertGroups(group);
+    @PostMapping("/create")
+    public ResponseEntity<?> newGroup(@RequestBody Groups groups) {
+        int result = groupsService.insertGroups(groups);
 
         if (result == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

@@ -16,7 +16,16 @@ public class GroupsServiceImpl implements GroupsService{
 
     @Override
     public int insertGroups(Groups groups) {
-        return groupsDao.insertGroups(groups);
+        int result = groupsDao.insertGroups(groups);
+
+        // 만약 그룹 삽입이 성공했다면
+        if (result > 0) {
+            int groupId = groups.getGroupId();
+            String groupLeaderId = groupsDao.selectGroupLeader(groupId);
+            groupsDao.insertGroupMember(groupId, groupLeaderId);
+        }
+
+        return result;
     }
 
     @Override
