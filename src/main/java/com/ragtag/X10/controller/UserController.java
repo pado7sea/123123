@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @GetMapping("/read/{userId}")
-    public ResponseEntity<?> getUserInfo(@PathVariable String userId) {
+    public ResponseEntity<?> getUserInfo(@PathVariable("userId") String userId) {
         User user = userService.userInfo(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -75,23 +75,23 @@ public class UserController {
     }
 
     @GetMapping("/leader/{userId}")
-    public ResponseEntity<?> isUserLeader(@PathVariable String userId) {
+    public ResponseEntity<?> isUserLeader(@PathVariable("userId") String userId) {
         boolean result = userService.isLeader(userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<List<User>> searchUser(@PathVariable String userId) {
-        List<User> result = userService.searchUser(userId);
+    public ResponseEntity<List<User>> searchUser(@PathVariable("keyword") String keyword) {
+        List<User> result = userService.searchUser(keyword);
 
-        if (result != null && !result.isEmpty())
+        if (result == null || result.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable String userId){
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") String userId){
         int result = userService.deleteUser(userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

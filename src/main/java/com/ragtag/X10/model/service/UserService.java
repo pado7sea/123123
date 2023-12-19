@@ -13,7 +13,7 @@ public interface UserService {
 
     boolean isLeader(String userId);
 
-    List<User> searchUser(String userId);
+    List<User> searchUser(String keyword);
 
     User userInfo(String userId);
 
