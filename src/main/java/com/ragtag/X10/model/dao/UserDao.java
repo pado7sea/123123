@@ -14,7 +14,7 @@ public interface UserDao {
 
     boolean checkLeader(String userId);
 
-    List<User> selectByUserId(String userId);
+    List<User> selectByUserId(String keyword);
 
     User selectUser(String userId);
 
