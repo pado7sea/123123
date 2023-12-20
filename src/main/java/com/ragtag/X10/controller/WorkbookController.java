@@ -32,7 +32,7 @@ public class WorkbookController {
 
     // 2. 문제집 상세정보 조회
     @GetMapping("/read/{workbookId}")
-    public ResponseEntity<?> readWorkbookById(@PathVariable int workbookId) {
+    public ResponseEntity<?> readWorkbookById(@PathVariable("workbookId") int workbookId) {
         Workbook workbook = workbookService.readWorkbookById(workbookId);
         if (workbook == null)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -41,20 +41,29 @@ public class WorkbookController {
 
     // 3. 과목 내 문제집 조회
     @GetMapping("/readAll/{subjectId}")
-    public ResponseEntity<?> readAllWorkbooksBySubjectId(@PathVariable int subjectId) {
+    public ResponseEntity<?> readAllWorkbooksBySubjectId(@PathVariable("subjectId") int subjectId) {
         List<Workbook> workbook = workbookService.readAllWorkbooksBySubjectId(subjectId);
         if (workbook == null || workbook.isEmpty())
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(workbook, HttpStatus.OK);
     }
 
-    // 4. 최근에 만들어진 문제집
-    @GetMapping("/recent/{userId}")
-    public ResponseEntity<?> getRecentWorkbooksByUserId(@PathVariable String userId) {
-        List<Workbook> workbook = workbookService.getRecentWorkbooksByUserId(userId);
-        if (workbook == null || workbook.isEmpty())
+    // 4-1. 최근에 만들어진 문제집
+    @GetMapping("/recentCreated/{userId}")
+    public ResponseEntity<?> getRecentCreatedWorkbooksByUserId(@PathVariable("userId") String userId) {
+        List<Workbook> workbooks = workbookService.getRecentCreatedWorkbooksByUserId(userId);
+        if (workbooks == null || workbooks.isEmpty())
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(workbook, HttpStatus.OK);
+        return new ResponseEntity<>(workbooks, HttpStatus.OK);
+    }
+
+    // 4-2. 최근에 푼 문제집
+    @GetMapping("/recentSolved/{userId}")
+    public ResponseEntity<?> getRecentSolvedWorkbooksByUserId(@PathVariable("userId") String userId) {
+        List<Workbook> workbooks = workbookService.getRecentSolvedWorkbooksByUserId(userId);
+        if (workbooks == null || workbooks.isEmpty())
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(workbooks, HttpStatus.OK);
     }
 
     // 5. 문제집 수정
@@ -68,7 +77,7 @@ public class WorkbookController {
 
     // 6. 문제집 삭제
     @DeleteMapping("/delete/{workbookId}")
-    public ResponseEntity<?> deleteWorkbook(@PathVariable int workbookId) {
+    public ResponseEntity<?> deleteWorkbook(@PathVariable("workbookId") int workbookId) {
         int result = workbookService.deleteWorkbook(workbookId);
         if (result == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
