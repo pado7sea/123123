@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
     int signUpUser(User user);
 
-    User loginUser(User user);
+    User loginUser(String userId);
 
     int modifyUser(User user);
 

@@ -10,7 +10,7 @@
     </insert>
 
     <!-- 유저 아이디 비번 가져오기-->
-    <select id="checkUser" parameterType="User">
+    <select id="checkUser" parameterType="String">
         SELECT userId, userPassword
         FROM user
         WHERE userId = #{userId}
@@ -27,7 +27,11 @@
 
     <!-- 유저가 그룹장인 그룹이 있는지 확인 -->
     <select id="checkLeader" parameterType="String">
-
+        SELECT EXISTS(
+        SELECT *
+        FROM `Group`
+        WHERE groupLeaderId = #{userId})
+        AS isLeader
     </select>
 
     <select id="selectByUserId" parameterType="String" resultType="User">
@@ -37,7 +41,7 @@
     </select>
 
     <select id="selectUser" parameterType="String">
-        SELECT *
+        SELECT userId, userName, userNickname, userEmail, userImg, userSolvedQuestion, userLevel
         FROM user
         WHERE userId = #{userId}
     </select>
