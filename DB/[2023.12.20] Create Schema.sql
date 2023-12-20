@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`Subject` (
   CONSTRAINT `fk_Subject_Group1`
     FOREIGN KEY (`groupId`)
     REFERENCES `X10`.`Group` (`groupId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`Workbook` (
   CONSTRAINT `fk_Workbook_Subject1`
     FOREIGN KEY (`subjectId`)
     REFERENCES `X10`.`Subject` (`groupId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`Question` (
   CONSTRAINT `fk_Quiz_Workbook1`
     FOREIGN KEY (`workbookId`)
     REFERENCES `X10`.`Workbook` (`workbookId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -123,12 +123,12 @@ CREATE TABLE IF NOT EXISTS `X10`.`GroupMember` (
   CONSTRAINT `fk_GroupMember_User1`
     FOREIGN KEY (`userId`)
     REFERENCES `X10`.`User` (`userId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_GroupMember_Group1`
     FOREIGN KEY (`groupId`)
     REFERENCES `X10`.`Group` (`groupId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`Notice` (
   CONSTRAINT `fk_Notice_User1`
     FOREIGN KEY (`receiverId`)
     REFERENCES `X10`.`User` (`userId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -167,12 +167,12 @@ CREATE TABLE IF NOT EXISTS `X10`.`UserWorkbookQuota` (
   CONSTRAINT `fk_User_has_Workbook_User1`
     FOREIGN KEY (`userId`)
     REFERENCES `X10`.`User` (`userId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_Workbook_Workbook1`
     FOREIGN KEY (`workbookId`)
     REFERENCES `X10`.`Workbook` (`workbookId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -190,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`MultipleChoice` (
   CONSTRAINT `fk_MultipleChoice_Question1`
     FOREIGN KEY (`questionId`)
     REFERENCES `X10`.`Question` (`questionId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -202,7 +202,6 @@ CREATE TABLE IF NOT EXISTS `X10`.`QuizRoom` (
   `quizRoomId` INT NOT NULL AUTO_INCREMENT,
   `groupId` INT NOT NULL,
   `quizRoomTitle` VARCHAR(45) NOT NULL,
-  `quizRoomContent` VARCHAR(200) NOT NULL,
   `quizRoomWorkbookId` INT NOT NULL,
   `quizRoomTimeLimit` INT NOT NULL,
   `quizRoomSingly` TINYINT NULL DEFAULT 1 COMMENT '0 : 한번에 해설 보기\n1 : 문제별 해설 보기',
@@ -234,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`UserQuizRoom` (
   CONSTRAINT `fk_table1_QuizRoom1`
     FOREIGN KEY (`quizRoomId`)
     REFERENCES `X10`.`QuizRoom` (`quizRoomId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_table1_User1`
     FOREIGN KEY (`userId`)
@@ -258,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`UserQuestionRecord` (
   CONSTRAINT `fk_User_has_Question_User1`
     FOREIGN KEY (`userId`)
     REFERENCES `X10`.`User` (`userId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_Question_Question1`
     FOREIGN KEY (`questionId`)
@@ -281,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`TodoList` (
   CONSTRAINT `fk_Todo_User1`
     FOREIGN KEY (`userId`)
     REFERENCES `X10`.`User` (`userId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

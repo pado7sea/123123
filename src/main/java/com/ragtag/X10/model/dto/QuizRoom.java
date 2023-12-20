@@ -4,27 +4,25 @@ public class QuizRoom {
     private int quizRoomId;
     private int groupId;
     private String quizRoomTitle;
-    private String quizRoomContent;
-    private int WorkbookId;
-    private int TimeLimit;
-    private int Singly;
-    private String Creator;
-    private int MaxNum;
+    private int quizRoomWorkbookId;
+    private int quizRoomTimeLimit;
+    private int quizRoomSingly;
+    private String quizRoomCreator;
+    private int quizRoomMaxNum;
     private int isStarted;
 
     public QuizRoom() {
     }
 
-    public QuizRoom(int quizRoomId, int groupId, String quizRoomTitle, String quizRoomContent, int workbookId, int timeLimit, int singly, String creator, int maxNum, int isStarted) {
+    public QuizRoom(int quizRoomId, int groupId, String quizRoomTitle, int quizRoomWorkbookId, int quizRoomTimeLimit, int quizRoomSingly, String quizRoomCreator, int quizRoomMaxNum, int isStarted) {
         this.quizRoomId = quizRoomId;
         this.groupId = groupId;
         this.quizRoomTitle = quizRoomTitle;
-        this.quizRoomContent = quizRoomContent;
-        WorkbookId = workbookId;
-        TimeLimit = timeLimit;
-        Singly = singly;
-        Creator = creator;
-        MaxNum = maxNum;
+        this.quizRoomWorkbookId = quizRoomWorkbookId;
+        this.quizRoomTimeLimit = quizRoomTimeLimit;
+        this.quizRoomSingly = quizRoomSingly;
+        this.quizRoomCreator = quizRoomCreator;
+        this.quizRoomMaxNum = quizRoomMaxNum;
         this.isStarted = isStarted;
     }
 
@@ -52,52 +50,44 @@ public class QuizRoom {
         this.quizRoomTitle = quizRoomTitle;
     }
 
-    public String getQuizRoomContent() {
-        return quizRoomContent;
+    public int getQuizRoomWorkbookId() {
+        return quizRoomWorkbookId;
     }
 
-    public void setQuizRoomContent(String quizRoomContent) {
-        this.quizRoomContent = quizRoomContent;
+    public void setQuizRoomWorkbookId(int quizRoomWorkbookId) {
+        this.quizRoomWorkbookId = quizRoomWorkbookId;
     }
 
-    public int getWorkbookId() {
-        return WorkbookId;
+    public int getQuizRoomTimeLimit() {
+        return quizRoomTimeLimit;
     }
 
-    public void setWorkbookId(int workbookId) {
-        WorkbookId = workbookId;
+    public void setQuizRoomTimeLimit(int quizRoomTimeLimit) {
+        this.quizRoomTimeLimit = quizRoomTimeLimit;
     }
 
-    public int getTimeLimit() {
-        return TimeLimit;
+    public int getQuizRoomSingly() {
+        return quizRoomSingly;
     }
 
-    public void setTimeLimit(int timeLimit) {
-        TimeLimit = timeLimit;
+    public void setQuizRoomSingly(int quizRoomSingly) {
+        this.quizRoomSingly = quizRoomSingly;
     }
 
-    public int getSingly() {
-        return Singly;
+    public String getQuizRoomCreator() {
+        return quizRoomCreator;
     }
 
-    public void setSingly(int singly) {
-        Singly = singly;
+    public void setQuizRoomCreator(String quizRoomCreator) {
+        this.quizRoomCreator = quizRoomCreator;
     }
 
-    public String getCreator() {
-        return Creator;
+    public int getQuizRoomMaxNum() {
+        return quizRoomMaxNum;
     }
 
-    public void setCreator(String creator) {
-        Creator = creator;
-    }
-
-    public int getMaxNum() {
-        return MaxNum;
-    }
-
-    public void setMaxNum(int maxNum) {
-        MaxNum = maxNum;
+    public void setQuizRoomMaxNum(int quizRoomMaxNum) {
+        this.quizRoomMaxNum = quizRoomMaxNum;
     }
 
     public int getIsStarted() {
@@ -114,12 +104,11 @@ public class QuizRoom {
                 "quizRoomId=" + quizRoomId +
                 ", groupId=" + groupId +
                 ", quizRoomTitle='" + quizRoomTitle + '\'' +
-                ", quizRoomContent='" + quizRoomContent + '\'' +
-                ", WorkbookId=" + WorkbookId +
-                ", TimeLimit=" + TimeLimit +
-                ", Singly=" + Singly +
-                ", Creator='" + Creator + '\'' +
-                ", MaxNum=" + MaxNum +
+                ", quizRoomWorkbookId=" + quizRoomWorkbookId +
+                ", quizRoomTimeLimit=" + quizRoomTimeLimit +
+                ", quizRoomSingly=" + quizRoomSingly +
+                ", quizRoomCreator='" + quizRoomCreator + '\'' +
+                ", quizRoomMaxNum=" + quizRoomMaxNum +
                 ", isStarted=" + isStarted +
                 '}';
     }

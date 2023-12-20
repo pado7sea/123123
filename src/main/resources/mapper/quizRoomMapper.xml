@@ -3,47 +3,90 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ragtag.X10.model.dao.QuizRoomDao">
-    <!-- 유저 회원가입-->
+    <!-- 퀴즈방 생성-->
     <insert id="insertQuizRoom" parameterType="QuizRoom">
-        Insert Into quizRoom (userId, userPassword, userEmail, userName, userNickname)
-        VALUES (#{userId}, #{userPassword}, #{userEmail}, #{userName}, #{userNickname});
+        Insert Into quizRoom (groupId, quizRoomTitle, quizRoomWorkbookId, quizRoomTimeLimit, quizRoomCreator)
+        VALUES (#{groupId}, #{quizRoomTitle}, #{quizRoomWorkbookId}, #{quizRoomTimeLimit}, #{quizRoomCreator});
     </insert>
 
-    <!-- 유저 아이디 비번 가져오기-->
-    <select id="checkUser" parameterType="User">
-        SELECT userId, userPassword
-        FROM user
+    <!-- 그룹 내 방 검색-->
+    <select id="selectAll" parameterType="int" resultType="QuizRoom">
+        SELECT *
+        FROM QuizRoom
+        WHERE groupId = #{groupId}
+    </select>
+
+    <!-- 방 상세 정보 조회 -->
+    <select id="selectOne" parameterType="int" resultType="QuizRoom">
+        SELECT *
+        FROM QuizRoom
+        WHERE quizRoomId = #{quizRoomId}
+    </select>
+
+    <!-- 퀴즈방 설정 변경 -->
+    <update id="updateMode" parameterType="QuizRoom">
+        UPDATE QuizRoom
+        SET quizRoomTitle = #{quizRoomTitle}
+        , quizRoomWorkbookId = #{quizRoomWorkbookId}
+        , quizRoomTimeLimit = #{quizRoomTimeLimit}
+        , quizRoomSingly = #{quizRoomSingly}
+        , quizRoomMaxNum = #{quizRoomMaxNum}
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+    <!-- 퀴즈방 삭제-->
+    <delete id="deleteQuizRoom" parameterType="int">
+        DELETE FROM QuizRoom
+        WHERE quizRoomId = #{quizRoomId}
+    </delete>
+
+    <!-- 방장 위임-->
+    <update id="updateCreator" parameterType="QuizRoom">
+        UPDATE QuizRoom
+        SET quizRoomCreator = (
+            SELECT userId
+            FROM UserQuizRoom
+            WHERE quizRoomId = #{quizRoomId} AND userId != #{quizRoomCreator}
+            ORDER BY userQuizRoomId
+            Limit 1
+        )
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+
+    <insert id="insertUserQuizRoom" parameterType="UserQuizRoom">
+        INSERT INTO UserQuizRoom(userId, quizRoomId)
+        VALUES(#{userId}, #{quizRoomId})
+    </insert>
+
+    <update id="updateStartTime" parameterType="int">
+        UPDATE userQuizRoom
+        SET startTime = now()
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+    <select id="selectStartTime" parameterType="String">
+        SELECT startTime
+        FROM UserQuizRoom
         WHERE userId = #{userId}
     </select>
 
-    <!-- 유저 정보 갱신 -->
-    <update id="updateUser" parameterType="User">
-        UPDATE user
-        SET
-        userNickname = #{userNickname}
-        , userPassword = #{userPassword}
+    <update id="updateIsReady" parameterType="String">
+        UPDATE UserQuizRoom
+        SET isReady = CASE WHEN isReady = 0 THEN 1 ELSE 0 END
         WHERE userId = #{userId}
     </update>
 
-    <!-- 유저가 그룹장인 그룹이 있는지 확인 -->
-    <select id="checkLeader" parameterType="String">
-
+    <select id="selectAllUser" parameterType="int">
+        SELECT User.*
+        FROM User
+        INNER JOIN UserQuizRoom ON UserQuizRoom.userId = User.userId
+        WHERE UserQuizRoom.quizRoomId = #{quizRoomId}
     </select>
 
-    <select id="selectByUserId" parameterType="String" resultType="User">
-        SELECT *
-        FROM user
-        WHERE userId LIKE concat('%', #{keyword}, '%')
-    </select>
-
-    <select id="selectUser" parameterType="String">
-        SELECT *
-        FROM user
+    <delete id="deleteUserQuizRoom" parameterType="String">
+        DELETE FROM UserQuizROom
         WHERE userId = #{userId}
-    </select>
-
-    <delete id="deleteUser" parameterType="String">
-        DELETE FROM user
-        WHERE userId = #{userId};
     </delete>
+
 </mapper>

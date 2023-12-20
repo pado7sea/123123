@@ -22,6 +22,7 @@ public class QuizRoomController {
     @PostMapping("/quizroom/create")
     public ResponseEntity<?> newQuizRoom(@RequestBody QuizRoom quizRoom) {
         int result = quizRoomService.createRoom(quizRoom);
+        // 다희 그룹 참고하기
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
@@ -30,7 +31,7 @@ public class QuizRoomController {
         QuizRoom result = quizRoomService.detail(quizRoomId);
         if (result == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(result, HttpStatus.FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/quizroom/readAll/{groupId}")
@@ -50,6 +51,7 @@ public class QuizRoomController {
 
     @DeleteMapping("/quizroom/delete/{quizRoomId}")
     public ResponseEntity<?> deleteQuizRoom(@PathVariable("quizRoomId") int quizRoomId) {
+        // 인원이 한 명일 때 삭제
         int result = quizRoomService.deleteQuizRoom(quizRoomId);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -71,6 +73,7 @@ public class QuizRoomController {
 
     @PutMapping("/userquizroom/setStartTime/{quizRoomId}")
     public ResponseEntity<?> setStartTime(@PathVariable("quizRoomId") int quizRoomId) {
+        //QuizRoomd의 isStarted 바꿔야 함
         int result = quizRoomService.setStartTime(quizRoomId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -95,8 +98,8 @@ public class QuizRoomController {
         QuizRoom quizRoom = quizRoomService.detail(quizRoomId);
 
         //경로를 통해 들어 온 userId가 방장인 경우 우선 방장 위임
-        if (quizRoom.getCreator().equals(userId))
-            quizRoomService.changeCreator(quizRoomId);
+        if (quizRoom.getQuizRoomCreator().equals(userId))
+            quizRoomService.changeCreator(quizRoom);
 
         //이제 나가자
         int result = quizRoomService.exitRoom(userId);

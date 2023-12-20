@@ -18,7 +18,7 @@ public interface QuizRoomService {
 
     int deleteQuizRoom(int quizRoomId);
 
-    int changeCreator(int quizRoomId);
+    int changeCreator(QuizRoom quizRoom);
 
     //UserQuizRoom 테이블 관련
     int enterRoom(UserQuizRoom userQuizRoom);

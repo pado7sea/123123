@@ -46,8 +46,8 @@ public class QuizRoomServiceImpl implements QuizRoomService {
     }
 
     @Override
-    public int changeCreator(int quizRoomId) {
-        return quizRoomDao.updateCreator(quizRoomId);
+    public int changeCreator(QuizRoom quizRoom) {
+        return quizRoomDao.updateCreator(quizRoom);
     }
 
     @Override
