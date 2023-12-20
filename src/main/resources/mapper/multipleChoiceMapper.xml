@@ -4,11 +4,11 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ragtag.X10.model.dao.MultipleChoiceDao">
 
-    <insert id="insertMultipleChoice" parameterType="com.example.dto.MultipleChoiceDTO">
-        INSERT INTO `X10`.`MultipleChoice` (`questionId`, `choiceContent`, `isAnswer`)
-        VALUES (#{questionId}, #{choiceContent}, #{isAnswer})
-    </insert>
+<!--    <insert id="insertMultipleChoice" parameterType="com.example.dto.MultipleChoiceDTO">-->
+<!--        INSERT INTO `X10`.`MultipleChoice` (`questionId`, `choiceContent`, `isAnswer`)-->
+<!--        VALUES (#{questionId}, #{choiceContent}, #{isAnswer})-->
+<!--    </insert>-->
 
-    <!-- 다른 필요한 쿼리들도 추가 가능 -->
+<!--    &lt;!&ndash; 다른 필요한 쿼리들도 추가 가능 &ndash;&gt;-->
 
 </mapper>
