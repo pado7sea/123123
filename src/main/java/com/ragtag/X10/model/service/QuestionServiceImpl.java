@@ -19,11 +19,13 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public int createQuestion(Question question) {
+
         return questionDao.createQuestion(question);
     }
 
     @Override
     public Question readQuestionById(int questionId) {
+
         return questionDao.readQuestionById(questionId);
     }
 
