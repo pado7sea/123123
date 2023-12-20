@@ -32,15 +32,16 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> selectAll(@RequestBody User user) {
-        User result = userService.userInfo(user.getUserId());
+        User tempUser = userService.loginUser(user.getUserId());
         // 아이디 없음
-        if (result == null)
+        if (tempUser == null)
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         //  비밀번호 불일치
-        if (!result.getUserPassword().equals(user.getUserPassword()))
+        if (!tempUser.getUserPassword().equals(user.getUserPassword()))
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         // 로그인 성공
-        return new ResponseEntity<>(HttpStatus.OK);
+        User result = userService.userInfo(user.getUserId());
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 //    @PostMapping("/login")

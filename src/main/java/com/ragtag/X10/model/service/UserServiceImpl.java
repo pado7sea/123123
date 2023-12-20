@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User loginUser(User user) {
-        return userDao.checkUser(user);
+    public User loginUser(String userId) {
+        return userDao.checkUser(userId);
     }
 
     @Override
