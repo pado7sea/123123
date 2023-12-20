@@ -46,6 +46,11 @@ public class QuizRoomServiceImpl implements QuizRoomService {
     }
 
     @Override
+    public int changeCreator(int quizRoomId) {
+        return quizRoomDao.updateCreator(quizRoomId);
+    }
+
+    @Override
     public int enterRoom(UserQuizRoom userQuizRoom) {
         return quizRoomDao.insertUserQuizRoom(userQuizRoom);
     }
@@ -56,7 +61,7 @@ public class QuizRoomServiceImpl implements QuizRoomService {
     }
 
     @Override
-    public int getStartTime(String userId) {
+    public String getStartTime(String userId) {
         return quizRoomDao.selectStartTime(userId);
     }
 

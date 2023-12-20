@@ -18,12 +18,14 @@ public interface QuizRoomDao {
 
     int deleteQuizRoom(int quizRoomId);
 
+    int updateCreator(int quizRoomId);
+
     //UserQuizRoom 테이블 관련
     int insertUserQuizRoom(UserQuizRoom userQuizRoom);
 
     int updateStartTime(int quizRoomId);
 
-    int selectStartTime(String userId);
+    String selectStartTime(String userId);
 
     int updateIsReady(String userId);
 

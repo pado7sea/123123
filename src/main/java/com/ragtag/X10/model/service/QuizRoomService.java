@@ -18,12 +18,14 @@ public interface QuizRoomService {
 
     int deleteQuizRoom(int quizRoomId);
 
+    int changeCreator(int quizRoomId);
+
     //UserQuizRoom 테이블 관련
     int enterRoom(UserQuizRoom userQuizRoom);
 
     int setStartTime(int quizRoomId);
 
-    int getStartTime(String userId);
+    String getStartTime(String userId);
 
     int userReady(String userId);
 
