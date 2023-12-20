@@ -33,8 +33,8 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
-    public int updateQuestion(Question workbook) {
-        return questionDao.updateQuestion(workbook);
+    public int updateQuestion(Question question) {
+        return questionDao.updateQuestion(question);
     }
 
     @Override

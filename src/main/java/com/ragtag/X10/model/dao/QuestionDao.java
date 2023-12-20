@@ -12,7 +12,7 @@ public interface QuestionDao {
 
     List<Question> readAllQuestionsByWorkbookId(int workbookId);
 
-    int updateQuestion(Question workbook);
+    int updateQuestion(Question question);
 
     int deleteQuestion(int workbookId);
 
