@@ -86,14 +86,4 @@ select * from question;
 
 select * from  UserQuestionRecord;
 
-select * from MultipleChoice; 
-
-select * from quizRoom;
-
-
-SELECT userId
-FROM UserQuizRoom
-WHERE quizRoomId = 1 AND quizRoomCreator != 'leader123';
-
-
 

@@ -28,8 +28,12 @@ public class WorkbookServiceImpl implements WorkbookService{
         return workbookDao.readAllWorkbooksBySubjectId(subjectId);
     }
 
-    public List<Workbook> getRecentWorkbooksByUserId(String userId) {
-        return workbookDao.getRecentWorkbooksByUserId(userId);
+    public List<Workbook> getRecentCreatedWorkbooksByUserId(String userId) {
+        return workbookDao.getRecentCreatedWorkbooksByUserId(userId);
+    }
+
+    public List<Workbook> getRecentSolvedWorkbooksByUserId(String userId) {
+        return workbookDao.getRecentSolvedWorkbooksByUserId(userId);
     }
 
     public int updateWorkbook(Workbook workbook) {
