@@ -22,7 +22,6 @@ public class QuizRoomController {
     @PostMapping("/quizroom/create")
     public ResponseEntity<?> newQuizRoom(@RequestBody QuizRoom quizRoom) {
         int result = quizRoomService.createRoom(quizRoom);
-        // 다희 그룹 참고하기
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
@@ -52,6 +51,7 @@ public class QuizRoomController {
     @DeleteMapping("/quizroom/delete/{quizRoomId}")
     public ResponseEntity<?> deleteQuizRoom(@PathVariable("quizRoomId") int quizRoomId) {
         // 인원이 한 명일 때 삭제
+        // 이거는 프론트에서 확인해서 방 인원이 1명일 때, 이 API로 보내주면 될 듯
         int result = quizRoomService.deleteQuizRoom(quizRoomId);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -73,7 +73,7 @@ public class QuizRoomController {
 
     @PutMapping("/userquizroom/setStartTime/{quizRoomId}")
     public ResponseEntity<?> setStartTime(@PathVariable("quizRoomId") int quizRoomId) {
-        //QuizRoomd의 isStarted 바꿔야 함
+        quizRoomService.startQuiz(quizRoomId);
         int result = quizRoomService.setStartTime(quizRoomId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

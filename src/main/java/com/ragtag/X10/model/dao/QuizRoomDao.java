@@ -18,7 +18,9 @@ public interface QuizRoomDao {
 
     int deleteQuizRoom(int quizRoomId);
 
-    int updateCreator(QuizRoom quizRoom);
+    void updateCreator(QuizRoom quizRoom);
+
+    void updateStarted(int quizRoomId);
 
     //UserQuizRoom 테이블 관련
     int insertUserQuizRoom(UserQuizRoom userQuizRoom);

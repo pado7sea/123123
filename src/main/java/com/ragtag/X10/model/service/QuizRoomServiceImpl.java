@@ -22,7 +22,16 @@ public class QuizRoomServiceImpl implements QuizRoomService {
 
     @Override
     public int createRoom(QuizRoom quizRoom) {
-        return quizRoomDao.insertQuizRoom(quizRoom);
+        int result = quizRoomDao.insertQuizRoom(quizRoom);
+
+        if (result > 0) {
+            UserQuizRoom userQuizRoom = new UserQuizRoom();
+            userQuizRoom.setQuizRoomId(quizRoom.getQuizRoomId());
+            userQuizRoom.setUserId(quizRoom.getQuizRoomCreator());
+            result = quizRoomDao.insertUserQuizRoom(userQuizRoom);
+        }
+
+        return result;
     }
 
     @Override
@@ -46,8 +55,13 @@ public class QuizRoomServiceImpl implements QuizRoomService {
     }
 
     @Override
-    public int changeCreator(QuizRoom quizRoom) {
-        return quizRoomDao.updateCreator(quizRoom);
+    public void changeCreator(QuizRoom quizRoom) {
+        quizRoomDao.updateCreator(quizRoom);
+    }
+
+    @Override
+    public void startQuiz(int quizRoomId) {
+        quizRoomDao.updateStarted(quizRoomId);
     }
 
     @Override

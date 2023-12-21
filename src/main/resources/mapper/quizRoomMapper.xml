@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ragtag.X10.model.dao.QuizRoomDao">
     <!-- 퀴즈방 생성-->
-    <insert id="insertQuizRoom" parameterType="QuizRoom">
+    <insert id="insertQuizRoom" parameterType="QuizRoom" useGeneratedKeys="true" keyProperty="quizRoomId">
         Insert Into quizRoom (groupId, quizRoomTitle, quizRoomWorkbookId, quizRoomTimeLimit, quizRoomCreator)
         VALUES (#{groupId}, #{quizRoomTitle}, #{quizRoomWorkbookId}, #{quizRoomTimeLimit}, #{quizRoomCreator});
     </insert>
@@ -75,6 +75,12 @@
         UPDATE UserQuizRoom
         SET isReady = CASE WHEN isReady = 0 THEN 1 ELSE 0 END
         WHERE userId = #{userId}
+    </update>
+
+    <update id="updateStarted" parameterType="int">
+        UPDATE QuizRoom
+        SET isStarted = 1
+        WHERE quizRoomId = #{quizRoomId}
     </update>
 
     <select id="selectAllUser" parameterType="int">
