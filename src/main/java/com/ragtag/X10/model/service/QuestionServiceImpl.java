@@ -30,6 +30,11 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    public Question readQuestionWithMultipleChoices(int questionId) {
+        return questionDao.readQuestionWithMultipleChoices(questionId);
+    }
+
+    @Override
     public List<Question> readAllQuestionsByWorkbookId(int workbookId) {
         return questionDao.readAllQuestionsByWorkbookId(workbookId);
     }

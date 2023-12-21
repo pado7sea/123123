@@ -11,6 +11,8 @@ public interface QuestionService {
 
     Question readQuestionById(int questionId);
 
+    Question readQuestionWithMultipleChoices(int questionId);
+
     List<Question> readAllQuestionsByWorkbookId(int workbookId);
 
     int updateQuestion(Question question);

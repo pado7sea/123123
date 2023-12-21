@@ -1,5 +1,7 @@
 package com.ragtag.X10.model.dto;
 
+import java.util.List;
+
 public class Question {
     private int questionId;
     private int workbookId;
@@ -11,11 +13,12 @@ public class Question {
     private String questionMaker;
     private boolean questionSave;
     private String questionImg;
+    private List<MultipleChoice> multipleChoices;
 
     public Question() {
     }
 
-    public Question(int questionId, int workbookId, String questionQ, String questionA, int questionType, String questionExplain, int questionDifficulty, String questionMaker, boolean questionSave, String questionImg) {
+    public Question(int questionId, int workbookId, String questionQ, String questionA, int questionType, String questionExplain, int questionDifficulty, String questionMaker, boolean questionSave, String questionImg, List<MultipleChoice> multipleChoices) {
         this.questionId = questionId;
         this.workbookId = workbookId;
         this.questionQ = questionQ;
@@ -26,6 +29,7 @@ public class Question {
         this.questionMaker = questionMaker;
         this.questionSave = questionSave;
         this.questionImg = questionImg;
+        this.multipleChoices = multipleChoices;
     }
 
     public int getQuestionId() {
@@ -108,6 +112,14 @@ public class Question {
         this.questionImg = questionImg;
     }
 
+    public List<MultipleChoice> getMultipleChoices() {
+        return multipleChoices;
+    }
+
+    public void setMultipleChoices(List<MultipleChoice> multipleChoices) {
+        this.multipleChoices = multipleChoices;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
@@ -121,6 +133,7 @@ public class Question {
                 ", questionMaker='" + questionMaker + '\'' +
                 ", questionSave=" + questionSave +
                 ", questionImg='" + questionImg + '\'' +
+                ", multipleChoices=" + multipleChoices +
                 '}';
     }
 }
