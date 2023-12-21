@@ -202,7 +202,6 @@ CREATE TABLE IF NOT EXISTS `X10`.`QuizRoom` (
   `quizRoomId` INT NOT NULL AUTO_INCREMENT,
   `groupId` INT NOT NULL,
   `quizRoomTitle` VARCHAR(45) NOT NULL,
-  `quizRoomContent` VARCHAR(200) NOT NULL,
   `quizRoomWorkbookId` INT NOT NULL,
   `quizRoomTimeLimit` INT NOT NULL,
   `quizRoomSingly` TINYINT NULL DEFAULT 1 COMMENT '0 : 한번에 해설 보기\n1 : 문제별 해설 보기',
@@ -234,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `X10`.`UserQuizRoom` (
   CONSTRAINT `fk_table1_QuizRoom1`
     FOREIGN KEY (`quizRoomId`)
     REFERENCES `X10`.`QuizRoom` (`quizRoomId`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_table1_User1`
     FOREIGN KEY (`userId`)

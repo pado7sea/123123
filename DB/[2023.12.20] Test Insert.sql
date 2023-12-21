@@ -86,7 +86,4 @@ select * from question;
 
 select * from  UserQuestionRecord;
 
-select * from MultipleChoice;
-
-
 
