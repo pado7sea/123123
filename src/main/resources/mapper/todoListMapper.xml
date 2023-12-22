@@ -22,7 +22,7 @@
         SET
         todoState = #{todoState}
         , todo = #{todo}
-        WHERE userId = #{userId}
+        WHERE todoId = #{todoId}
     </update>
 
     <!-- 할 일 삭제 -->
