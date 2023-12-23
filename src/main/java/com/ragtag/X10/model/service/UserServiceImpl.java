@@ -46,4 +46,12 @@ public class UserServiceImpl implements UserService {
     public int deleteUser(String userId) {
         return userDao.deleteUser(userId);
     }
+
+    @Override
+    public int updateExp(String userId, int exp) {
+        User user = userDao.selectUser(userId);
+        user.setUserSolvedQuestion(user.getUserSolvedQuestion() + exp);
+        user.setUserLevel(user.getUserSolvedQuestion() / 100);
+        return userDao.updateExp(user);
+    }
 }

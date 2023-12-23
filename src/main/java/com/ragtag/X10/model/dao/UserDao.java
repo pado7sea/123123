@@ -19,4 +19,6 @@ public interface UserDao {
     User selectUser(String userId);
 
     int deleteUser(String userId);
+
+    int updateExp(User user);
 }

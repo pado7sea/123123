@@ -109,4 +109,10 @@ public class UserController {
         int result = userService.deleteUser(userId);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PutMapping("/{userId}/expup/{exp}")
+    public ResponseEntity<?> expUp(@PathVariable("userId") String userId, @PathVariable("exp") int exp) {
+        int result = userService.updateExp(userId, exp);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

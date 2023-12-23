@@ -50,4 +50,11 @@
         DELETE FROM user
         WHERE userId = #{userId};
     </delete>
+
+    <update id="updateExp">
+        UPDATE user
+        SET userLevel = #{userLevel},
+        userSolvedQuestion = #{userSolvedQuestion}
+        WHERE userId = #{userId}
+    </update>
 </mapper>

@@ -18,4 +18,6 @@ public interface UserService {
     User userInfo(String userId);
 
     int deleteUser(String userId);
+
+    int updateExp(String userId, int exp);
 }
