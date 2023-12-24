@@ -44,8 +44,8 @@ public class MultipleChoice {
         return isAnswer;
     }
 
-    public void setAnswer(boolean answer) {
-        isAnswer = answer;
+    public void setAnswer(boolean isAnswer) {
+        isAnswer = isAnswer;
     }
 
     @Override
