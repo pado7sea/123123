@@ -29,9 +29,9 @@ public class SubjectController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 2. 그룹 내 과목 조회 /readAll/{groupId}
+    // 2. 그룹 내 과목 조회
     @GetMapping("/readAll/{groupId}")
-    public ResponseEntity<?> readAll(@PathVariable int groupId) {
+    public ResponseEntity<?> readAll(@PathVariable(name = "groupId") int groupId) {
         List<Subject> subject = subjectService.readAll(groupId);
         if (subject == null || subject.isEmpty())
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -49,7 +49,7 @@ public class SubjectController {
 
     // 4. 과목 삭제
     @DeleteMapping("/delete/{subjectId}")
-    public ResponseEntity<?> deleteSubject(@PathVariable int subjectId) {
+    public ResponseEntity<?> deleteSubject(@PathVariable(name = "subjectId") int subjectId) {
         int result = subjectService.deleteSubject(subjectId);
         if (result == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

@@ -2,6 +2,7 @@ package com.ragtag.X10.controller;
 
 import com.ragtag.X10.model.dto.Workbook;
 import com.ragtag.X10.model.service.WorkbookService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,10 @@ public class WorkbookController {
     }
 
     // 1. 문제집 생성
-    @PostMapping("/create")
-    public ResponseEntity<?> createWorkbook(@RequestBody Workbook workbook) {
-        int result = workbookService.createWorkbook(workbook);
-        if (result == 0)
+    @PostMapping("/create/{groupId}")
+    public ResponseEntity<?> createWorkbook(@RequestBody Workbook workbook, @PathVariable("groupId") int groupId) {
+        int result = workbookService.createWorkbook(workbook, groupId);
+        if (result <= 1)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(HttpStatus.OK);
     }

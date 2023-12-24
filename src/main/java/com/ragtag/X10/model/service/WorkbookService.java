@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface WorkbookService {
 
-    int createWorkbook(Workbook workbook);
+    int createWorkbook(Workbook workbook, int groupId);
 
     Workbook readWorkbookById(int workbookId);
 
