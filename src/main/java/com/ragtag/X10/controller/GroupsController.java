@@ -2,6 +2,7 @@ package com.ragtag.X10.controller;
 
 import com.ragtag.X10.model.dto.GroupMember;
 import com.ragtag.X10.model.dto.Groups;
+import com.ragtag.X10.model.dto.User;
 import com.ragtag.X10.model.service.GroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,7 @@ public class GroupsController {
     // 그룹 내 유저 전체 조회
     @GetMapping("readAllMember/{groupId}")
     public ResponseEntity<?> selectAllUsers(@PathVariable("groupId") int groupId) {
-        List<GroupMember> users = groupsService.selectAllUsers(groupId);
+        List<User> users = groupsService.selectAllUsersInfo(groupId);
 
         if (users == null || users.isEmpty())
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

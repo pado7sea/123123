@@ -3,6 +3,7 @@ package com.ragtag.X10.model.service;
 import com.ragtag.X10.model.dao.GroupsDao;
 import com.ragtag.X10.model.dto.GroupMember;
 import com.ragtag.X10.model.dto.Groups;
+import com.ragtag.X10.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,11 @@ public class GroupsServiceImpl implements GroupsService{
     @Override
     public List<GroupMember> selectAllUsers(int groupId) {
         return groupsDao.selectAllUsers(groupId);
+    }
+
+    @Override
+    public List<User> selectAllUsersInfo(int groupId) {
+        return groupsDao.selectAllUsersInfo(groupId);
     }
 
     @Override

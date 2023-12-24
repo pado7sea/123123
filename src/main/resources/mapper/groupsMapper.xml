@@ -44,22 +44,23 @@
         WHERE groupId = #{groupId};
     </select>
 
+    <select id="selectAllUsersInfo" resultType="User" parameterType="int">
+        SELECT User.userId, userName, userNickname, userImg, userSolvedQuestion, userLevel, isOnline
+        FROM User
+        INNER JOIN Groupmember ON User.userId = Groupmember.userId
+        WHERE groupId = #{groupId};
+    </select>
+
     <!--  그룹 수정  -->
     <update id="updateGroups" parameterType="Groups">
         UPDATE `Group`
-        SET groupLeaderId = #{groupLeaderId}, groupName = #{groupName}, groupDetail = #{groupDetail}, groupImg = #{groupImg}
+        SET groupLeaderId = #{groupLeaderId}, groupName = #{groupName}, groupDetail = #{groupDetail}, groupImg =
+        #{groupImg}
         WHERE groupId = #{groupId};
     </update>
 
     <!--  그룹 삭제  -->
     <delete id="deleteGroups" parameterType="int">
-<!--        &lt;!&ndash; 그룹과 관련된 데이터 삭제 &ndash;&gt;-->
-<!--        DELETE FROM `Question` WHERE `workbookId` IN (SELECT `workbookId` FROM `Workbook` WHERE `subjectId` IN (SELECT `subjectId` FROM `X10`.`Subject` WHERE `groupId` = #{groupId});-->
-<!--        DELETE FROM `Workbook` WHERE `subjectId` IN (SELECT `subjectId` FROM `Subject` WHERE `groupId` = #{groupId});-->
-<!--        DELETE FROM `Subject` WHERE `groupId` = #{groupId};-->
-<!--        DELETE FROM `GroupMember` WHERE `groupId` = #{groupId};-->
-
-        <!-- 그룹 삭제 -->
         DELETE FROM `Groups` WHERE `groupId` = #{groupId};
     </delete>
 

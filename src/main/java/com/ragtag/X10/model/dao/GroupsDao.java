@@ -2,6 +2,7 @@ package com.ragtag.X10.model.dao;
 
 import com.ragtag.X10.model.dto.GroupMember;
 import com.ragtag.X10.model.dto.Groups;
+import com.ragtag.X10.model.dto.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface GroupsDao {
     List<Groups> selectUserGroups(String userId); // 유저 가입 그룹 전체 조회
 
     List<GroupMember> selectAllUsers(int groupId); // 그룹 내 유저 전체 조회
+
+    List<User> selectAllUsersInfo(int groupId); // 그룹 내 유저 전체 조회
 
     int updateGroups(Groups groups); // 그룹 수정
 
