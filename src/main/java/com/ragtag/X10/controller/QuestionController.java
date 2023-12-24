@@ -26,9 +26,13 @@ public class QuestionController {
     public ResponseEntity<?> createQuestion(@RequestBody Question question) {
         int result = questionService.createQuestion(question);
 
-        if (result == 0)
-            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (result == 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            int createdQuestionId = question.getQuestionId();
+            Question createdQuestion = questionService.readQuestionById(createdQuestionId);
+            return new ResponseEntity<>(createdQuestion, HttpStatus.OK);
+        }
     }
 
     // 문제 상세정보 조회
