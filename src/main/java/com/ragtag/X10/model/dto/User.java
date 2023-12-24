@@ -9,11 +9,12 @@ public class User {
     private String userImg;
     private int userSolvedQuestion;
     private int userLevel;
+    private boolean isOnline;
 
     public User() {
     }
 
-    public User(String userId, String userPassword, String userName, String userNickname, String userEmail, String userImg, int userSolvedQuestion, int userLevel) {
+    public User(String userId, String userPassword, String userName, String userNickname, String userEmail, String userImg, int userSolvedQuestion, int userLevel, boolean isOnline) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.userName = userName;
@@ -22,6 +23,7 @@ public class User {
         this.userImg = userImg;
         this.userSolvedQuestion = userSolvedQuestion;
         this.userLevel = userLevel;
+        this.isOnline = isOnline;
     }
 
     public String getUserId() {
@@ -88,6 +90,14 @@ public class User {
         this.userLevel = userLevel;
     }
 
+    public boolean getIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(boolean isOnline) {
+        isOnline = isOnline;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,6 +109,7 @@ public class User {
                 ", userImg='" + userImg + '\'' +
                 ", userSolvedQuestion=" + userSolvedQuestion +
                 ", userLevel=" + userLevel +
+                ", isOnline=" + isOnline +
                 '}';
     }
 }
