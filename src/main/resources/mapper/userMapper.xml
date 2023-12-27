@@ -25,6 +25,14 @@
         WHERE userId = #{userId}
     </update>
 
+    <!-- 유저 프로필 갱신-->
+    <update id="updateUserImg" parameterType="User">
+        UPDATE user
+        SET
+        userImg = #{userImg}
+        WHERE userId = #{userId};
+    </update>
+
     <!-- 유저가 그룹장인 그룹이 있는지 확인 -->
     <select id="checkLeader" parameterType="String">
         SELECT EXISTS(
