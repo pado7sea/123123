@@ -23,7 +23,7 @@
     </insert>
 
     <!--  그룹 상세정보 조회  -->
-    <select id="selectOne" resultType="Groups" parameterType="int">
+    <select id="selectOne" parameterType="int">
         SELECT *
         FROM `group`
         WHERE groupId = #{groupId};
@@ -56,6 +56,12 @@
         UPDATE `Group`
         SET groupLeaderId = #{groupLeaderId}, groupName = #{groupName}, groupDetail = #{groupDetail}, groupImg =
         #{groupImg}
+        WHERE groupId = #{groupId};
+    </update>
+
+    <update id="updateGroupsImg" parameterType="Groups">
+        UPDATE `Group`
+        SET groupImg = #{groupImg}
         WHERE groupId = #{groupId};
     </update>
 
