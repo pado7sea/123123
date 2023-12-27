@@ -12,6 +12,8 @@ public interface UserDao {
 
     int updateUser(User user);
 
+    int updateUserImg(User user);
+
     boolean checkLeader(String userId);
 
     List<User> selectByUserId(String keyword);

@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int modifyUserImg(User user) {
+        return userDao.updateUserImg(user);
+    }
+
+    @Override
     public boolean isLeader(String userId) {
         return userDao.checkLeader(userId);
     }

@@ -11,6 +11,8 @@ public interface UserService {
 
     int modifyUser(User user);
 
+    int modifyUserImg(User user);
+
     boolean isLeader(String userId);
 
     List<User> searchUser(String keyword);

@@ -5,11 +5,16 @@ import com.ragtag.X10.model.service.UserService;
 import com.ragtag.X10.util.JwtUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.UnsupportedEncodingException;
+
+import java.io.File;
 import java.util.*;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
@@ -22,6 +27,9 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    ResourceLoader resLoader;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUpUser(@RequestBody User user) {
@@ -99,11 +107,41 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateInfo(@RequestBody User user) {
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@RequestBody User user){
         int result = userService.modifyUser(user);
-        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        if(result == 0)
+            return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(value = "/updateProfile/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateInfo(@PathVariable("userId") String userId, @RequestPart(name="file", required = false) MultipartFile file) {
+        try {
+            User user = userService.userInfo(userId);
+            System.out.println(file.getOriginalFilename());
+
+            if (file != null && file.getSize() > 0) {
+                Resource res = resLoader.getResource("classpath:/static/upload");
+                System.out.println(res.getFile().getCanonicalFile());
+                user.setUserImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
+                file.transferTo(new File(res.getFile().getCanonicalFile() + "/" + user.getUserImg()));
+            }
+            // 나머지 게시글 등록 로직
+            int result = userService.modifyUserImg(user);
+
+            if (result == 0)
+                return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping("/leader/{userId}")
     public ResponseEntity<?> isUserLeader(@PathVariable("userId") String userId) {
