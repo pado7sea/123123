@@ -3,6 +3,7 @@ package com.ragtag.X10.controller;
 import com.ragtag.X10.model.dto.User;
 import com.ragtag.X10.model.service.UserService;
 import com.ragtag.X10.util.JwtUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,20 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> selectAll(@RequestBody User user) {
+    public ResponseEntity<?> selectAll(@RequestBody User user, HttpSession session) {
         User tempUser = userService.loginUser(user.getUserId());
         // 아이디 없음
-        if (tempUser == null)
+        if (tempUser == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        //  비밀번호 불일치
-        if (!tempUser.getUserPassword().equals(user.getUserPassword()))
+        }
+        // 비밀번호 불일치
+        if (!tempUser.getUserPassword().equals(user.getUserPassword())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         // 로그인 성공
         User result = userService.userInfo(user.getUserId());
+        // 세션에 사용자 정보 저장
+        session.setAttribute("loggedInUser", result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -75,6 +80,18 @@ public class UserController {
 //            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
+
+    @PostMapping("/users/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        // 세션에서 사용자 정보 제거
+        session.removeAttribute("loggedInUser");
+
+        // 세션을 완전히 무효화
+        session.invalidate();
+
+        // 여기에서는 로그아웃 성공을 HttpStatus.OK로 응답
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @GetMapping("/read/{userId}")
     public ResponseEntity<?> getUserInfo(@PathVariable("userId") String userId) {
