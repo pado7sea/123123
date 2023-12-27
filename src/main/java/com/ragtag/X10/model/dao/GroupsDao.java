@@ -15,7 +15,7 @@ public interface GroupsDao {
 
     void insertGroupMember(@Param("groupId") int groupId, @Param("groupLeaderId") String groupLeaderId); // 그룹 멤버 추가
 
-    List<Groups> selectOne(int groupId); // 그룹 상세정보 조회
+    Groups selectOne(int groupId); // 그룹 상세정보 조회
 
     List<Groups> selectUserGroups(String userId); // 유저 가입 그룹 전체 조회
 
@@ -24,6 +24,8 @@ public interface GroupsDao {
     List<User> selectAllUsersInfo(int groupId); // 그룹 내 유저 전체 조회
 
     int updateGroups(Groups groups); // 그룹 수정
+    
+    int updateGroupsImg(Groups groups); // 그룹 이미지 수정
 
     int deleteGroups(int groupId); // 그룹 삭제
 

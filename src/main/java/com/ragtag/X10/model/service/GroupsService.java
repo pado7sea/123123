@@ -10,7 +10,7 @@ import java.util.List;
 public interface GroupsService {
     int insertGroups(Groups groups); // 그룹 생성
 
-    List<Groups> selectOne(int groupId); // 그룹 상세정보 조회
+    Groups selectOne(int groupId); // 그룹 상세정보 조회
 
     List<Groups> selectUserGroups(String userId); // 유저 가입 그룹 전체 조회
 
@@ -19,6 +19,8 @@ public interface GroupsService {
     List<User> selectAllUsersInfo(int groupId);
 
     int updateGroups(Groups groups); // 그룹 수정
+
+    int updateGroupsImg(Groups groups); // 그룹 이미지 수정
 
     int deleteGroups(int groupId); // 그룹 삭제
 

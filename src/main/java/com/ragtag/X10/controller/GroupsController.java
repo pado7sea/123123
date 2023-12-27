@@ -5,10 +5,15 @@ import com.ragtag.X10.model.dto.Groups;
 import com.ragtag.X10.model.dto.User;
 import com.ragtag.X10.model.service.GroupsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
@@ -18,6 +23,9 @@ public class GroupsController {
 
     @Autowired
     private GroupsService groupsService;
+
+    @Autowired
+    ResourceLoader resLoader;
 
     // 그룹 생성
     @PostMapping("/create")
@@ -32,9 +40,9 @@ public class GroupsController {
     // 그룹 상세정보 조회
     @GetMapping("read/{groupId}")
     public ResponseEntity<?> selectOne(@PathVariable("groupId") int groupId) {
-        List<Groups> groups = groupsService.selectOne(groupId);
+        Groups groups = groupsService.selectOne(groupId);
 
-        if (groups == null || groups.isEmpty())
+        if (groups == null)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(groups, HttpStatus.OK);
     }
@@ -66,6 +74,30 @@ public class GroupsController {
         if (result == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/updateProfile/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateInfo(@PathVariable("groupId") int groupId, @RequestPart(name="groupImg", required = false) MultipartFile file) {
+        try {
+            Groups group = groupsService.selectOne(groupId);
+
+            if (file != null && file.getSize() > 0) {
+                Resource res = resLoader.getResource("classpath:/static/upload");
+                System.out.println(res.getFile().getCanonicalFile());
+                group.setGroupImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
+                file.transferTo(new File(res.getFile().getCanonicalFile() + "/" + group.getGroupImg()));
+            }
+            // 나머지 게시글 등록 로직
+            int result = groupsService.updateGroupsImg(group);
+
+            if (result == 0)
+                return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+
+            return new ResponseEntity<>(group, HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // 그룹 삭제

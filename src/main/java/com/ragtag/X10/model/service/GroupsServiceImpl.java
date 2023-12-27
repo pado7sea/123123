@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GroupsServiceImpl implements GroupsService{
+public class GroupsServiceImpl implements GroupsService {
 
     @Autowired
     GroupsDao groupsDao;
@@ -30,7 +30,7 @@ public class GroupsServiceImpl implements GroupsService{
     }
 
     @Override
-    public List<Groups> selectOne(int groupId) {
+    public Groups selectOne(int groupId) {
         return groupsDao.selectOne(groupId);
     }
 
@@ -52,6 +52,11 @@ public class GroupsServiceImpl implements GroupsService{
     @Override
     public int updateGroups(Groups groups) {
         return groupsDao.updateGroups(groups);
+    }
+
+    @Override
+    public int updateGroupsImg(Groups groups) {
+        return groupsDao.updateGroupsImg(groups);
     }
 
     @Override
