@@ -84,7 +84,7 @@
     </update>
 
     <select id="selectAllUser" parameterType="int">
-        SELECT User.*
+        SELECT User.*, UserQuizRoom.isReady
         FROM User
         INNER JOIN UserQuizRoom ON UserQuizRoom.userId = User.userId
         WHERE UserQuizRoom.quizRoomId = #{quizRoomId}

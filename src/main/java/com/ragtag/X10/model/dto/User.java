@@ -10,11 +10,12 @@ public class User {
     private int userSolvedQuestion;
     private int userLevel;
     private boolean isOnline;
+    private boolean isReady;
 
     public User() {
     }
 
-    public User(String userId, String userPassword, String userName, String userNickname, String userEmail, String userImg, int userSolvedQuestion, int userLevel, boolean isOnline) {
+    public User(String userId, String userPassword, String userName, String userNickname, String userEmail, String userImg, int userSolvedQuestion, int userLevel, boolean isOnline, boolean isReady) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.userName = userName;
@@ -24,6 +25,7 @@ public class User {
         this.userSolvedQuestion = userSolvedQuestion;
         this.userLevel = userLevel;
         this.isOnline = isOnline;
+        this.isReady = isReady;
     }
 
     public String getUserId() {
@@ -98,6 +100,14 @@ public class User {
         isOnline = isOnline;
     }
 
+    public boolean getIsReady() {
+        return isReady;
+    }
+
+    public void setIsReady(boolean isReady) {
+        this.isReady = isReady;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -110,6 +120,7 @@ public class User {
                 ", userSolvedQuestion=" + userSolvedQuestion +
                 ", userLevel=" + userLevel +
                 ", isOnline=" + isOnline +
+                ", isReady=" + isReady +
                 '}';
     }
 }
