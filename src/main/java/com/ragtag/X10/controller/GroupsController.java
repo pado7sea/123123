@@ -30,11 +30,11 @@ public class GroupsController {
     // 그룹 생성
     @PostMapping("/create")
     public ResponseEntity<?> newGroup(@RequestBody Groups groups) {
-        int result = groupsService.insertGroups(groups);
+        int groupId = groupsService.insertGroups(groups);
 
-        if (result == 0)
+        if (groupId == 0)
             return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(groupId, HttpStatus.OK);
     }
 
     // 그룹 상세정보 조회
