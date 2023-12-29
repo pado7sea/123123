@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.QuizRoomDao">
+    <!-- 퀴즈방 생성-->
+    <insert id="insertQuizRoom" parameterType="QuizRoom" useGeneratedKeys="true" keyProperty="quizRoomId">
+        Insert Into quizRoom (groupId, quizRoomTitle, quizRoomWorkbookId, quizRoomTimeLimit, quizRoomCreator)
+        VALUES (#{groupId}, #{quizRoomTitle}, #{quizRoomWorkbookId}, #{quizRoomTimeLimit}, #{quizRoomCreator});
+    </insert>
+
+    <!-- 그룹 내 방 검색-->
+    <select id="selectAll" parameterType="int" resultType="QuizRoom">
+        SELECT *
+        FROM QuizRoom
+        WHERE groupId = #{groupId}
+    </select>
+
+    <!-- 방 상세 정보 조회 -->
+    <select id="selectOne" parameterType="int" resultType="QuizRoom">
+        SELECT *
+        FROM QuizRoom
+        WHERE quizRoomId = #{quizRoomId}
+    </select>
+
+    <!-- 퀴즈방 설정 변경 -->
+    <update id="updateMode" parameterType="QuizRoom">
+        UPDATE QuizRoom
+        SET quizRoomTitle = #{quizRoomTitle}
+        , quizRoomWorkbookId = #{quizRoomWorkbookId}
+        , quizRoomTimeLimit = #{quizRoomTimeLimit}
+        , quizRoomSingly = #{quizRoomSingly}
+        , quizRoomMaxNum = #{quizRoomMaxNum}
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+    <!-- 퀴즈방 삭제-->
+    <delete id="deleteQuizRoom" parameterType="int">
+        DELETE FROM QuizRoom
+        WHERE quizRoomId = #{quizRoomId}
+    </delete>
+
+    <!-- 방장 위임-->
+    <update id="updateCreator" parameterType="QuizRoom">
+        UPDATE QuizRoom
+        SET quizRoomCreator = (
+            SELECT userId
+            FROM UserQuizRoom
+            WHERE quizRoomId = #{quizRoomId} AND userId != #{quizRoomCreator}
+            ORDER BY userQuizRoomId
+            Limit 1
+        )
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+
+    <insert id="insertUserQuizRoom" parameterType="UserQuizRoom">
+        INSERT INTO UserQuizRoom(userId, quizRoomId)
+        VALUES(#{userId}, #{quizRoomId})
+    </insert>
+
+    <update id="updateStartTime" parameterType="int">
+        UPDATE userQuizRoom
+        SET startTime = now()
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+    <select id="selectStartTime" parameterType="String">
+        SELECT startTime
+        FROM UserQuizRoom
+        WHERE userId = #{userId}
+    </select>
+
+    <update id="updateIsReady" parameterType="String">
+        UPDATE UserQuizRoom
+        SET isReady = CASE WHEN isReady = 0 THEN 1 ELSE 0 END
+        WHERE userId = #{userId}
+    </update>
+
+    <update id="updateStarted" parameterType="int">
+        UPDATE QuizRoom
+        SET isStarted = 1
+        WHERE quizRoomId = #{quizRoomId}
+    </update>
+
+    <select id="selectAllUser" parameterType="int">
+        SELECT User.*, UserQuizRoom.isReady
+        FROM User
+        INNER JOIN UserQuizRoom ON UserQuizRoom.userId = User.userId
+        WHERE UserQuizRoom.quizRoomId = #{quizRoomId}
+    </select>
+
+    <delete id="deleteUserQuizRoom" parameterType="String">
+        DELETE FROM UserQuizROom
+        WHERE userId = #{userId}
+    </delete>
+
+</mapper>

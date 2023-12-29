@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.UserDao">
+    <!-- 유저 회원가입-->
+    <insert id="insertUser" parameterType="User">
+        Insert Into user (userId, userPassword, userEmail, userName, userNickname)
+        VALUES (#{userId}, #{userPassword}, #{userEmail}, #{userName}, #{userNickname});
+    </insert>
+
+    <!-- 유저 아이디 비번 가져오기-->
+    <select id="checkUser" parameterType="String">
+        SELECT userId, userPassword
+        FROM user
+        WHERE userId = #{userId}
+    </select>
+
+    <!-- 유저 정보 갱신 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE user
+        SET
+        userNickname = #{userNickname}
+        , userPassword = #{userPassword}
+        WHERE userId = #{userId}
+    </update>
+
+    <!-- 유저 프로필 갱신-->
+    <update id="updateUserImg" parameterType="User">
+        UPDATE user
+        SET
+        userImg = #{userImg}
+        WHERE userId = #{userId};
+    </update>
+
+    <!-- 유저가 그룹장인 그룹이 있는지 확인 -->
+    <select id="checkLeader" parameterType="String">
+        SELECT EXISTS(
+        SELECT *
+        FROM `Group`
+        WHERE groupLeaderId = #{userId})
+        AS isLeader
+    </select>
+
+    <select id="selectByUserId" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE userId LIKE concat('%', #{keyword}, '%')
+    </select>
+
+    <select id="selectUser" parameterType="String">
+        SELECT userId, userName, userNickname, userEmail, userImg, userSolvedQuestion, userLevel
+        FROM user
+        WHERE userId = #{userId}
+    </select>
+
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM user
+        WHERE userId = #{userId};
+    </delete>
+
+    <update id="updateExp">
+        UPDATE user
+        SET userLevel = #{userLevel},
+        userSolvedQuestion = #{userSolvedQuestion}
+        WHERE userId = #{userId}
+    </update>
+</mapper>

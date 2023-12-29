@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.TodoDao">
+    <!-- 전체 할 일 조회 -->
+    <select id="selectAll" resultType="TodoList" parameterType="String">
+        SELECT *
+        FROM TodoList
+        WHERE userId = #{userId}
+    </select>
+
+    <!-- 할 일 등록 -->
+    <insert id="insertTodo" parameterType="TodoList">
+        INSERT INTO TodoList (userId, todoState, todo)
+        VALUES (#{userId}, #{todoState}, #{todo});
+    </insert>
+
+    <!-- 할 일 수정 -->
+    <update id="updateTodo" parameterType="TodoList">
+        UPDATE TodoList
+        SET
+        todoState = #{todoState}
+        , todo = #{todo}
+        WHERE todoId = #{todoId}
+    </update>
+
+    <!-- 할 일 삭제 -->
+    <delete id="deleteTodo" parameterType="int">
+        DELETE FROM TodoList
+        WHERE todoId = #{todoId}
+    </delete>
+</mapper>

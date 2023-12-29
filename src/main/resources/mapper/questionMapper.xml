@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.QuestionDao">
+
+<!--    &lt;!&ndash; Question과 연관된 MultipleChoice 목록을 조회하는 쿼리 &ndash;&gt;-->
+<!--    <resultMap id="questionResultMap" type="Question">-->
+<!--        &lt;!&ndash; 기존의 result들 &ndash;&gt;-->
+<!--        <id property="questionId" column="questionId"/>-->
+<!--        <result property="workbookId" column="workbookId"/>-->
+<!--        <result property="questionQ" column="questionQ"/>-->
+<!--        <result property="questionA" column="questionA"/>-->
+<!--        <result property="questionType" column="questionType"/>-->
+<!--        <result property="questionExplain" column="questionExplain"/>-->
+<!--        <result property="questionDifficulty" column="questionDifficulty"/>-->
+<!--        <result property="questionMaker" column="questionMaker"/>-->
+<!--        <result property="questionSave" column="questionSave"/>-->
+<!--        <result property="questionImg" column="questionImg"/>-->
+<!--        &lt;!&ndash; MultipleChoice 목록 &ndash;&gt;-->
+<!--        <collection property="multipleChoices" ofType="MultipleChoice" resultMap="multipleChoiceResultMap"/>-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash; MultipleChoice를 위한 resultMap &ndash;&gt;-->
+<!--    <resultMap id="multipleChoiceResultMap" type="MultipleChoice">-->
+<!--        <id property="multipleChoiceId" column="multipleChoiceId"/>-->
+<!--        <result property="questionId" column="questionId"/>-->
+<!--        <result property="choiceContent" column="choiceContent"/>-->
+<!--        <result property="isAnswer" column="isAnswer"/>-->
+<!--    </resultMap>-->
+
+    <!-- 문제 생성 -->
+    <insert id="createQuestion" parameterType="Question" useGeneratedKeys="true" keyProperty="questionId">
+        <![CDATA[
+            INSERT INTO Question (workbookId, questionQ, questionA, questionType,
+                                 questionExplain, questionDifficulty, questionMaker,
+                                 questionSave, questionImg)
+            VALUES (#{workbookId}, #{questionQ}, #{questionA}, #{questionType},
+                    #{questionExplain}, #{questionDifficulty}, #{questionMaker},
+                    #{questionSave}, #{questionImg});
+        ]]>
+    </insert>
+
+    <!-- 문제 상세정보 조회 -->
+    <select id="readQuestionById" parameterType="int" resultType="Question">
+        SELECT * FROM Question WHERE questionId = #{questionId}
+    </select>
+
+    <!-- 문제 상세정보 + MultipleChoice 조회 -->
+    <select id="readQuestionWithMultipleChoices" parameterType="int" resultType="Question">
+        SELECT * FROM Question
+        WHERE questionId = #{questionId}
+    </select>
+
+    <!-- 문제집 내 모든 문제 + 각 문제의 MultipleChoice 목록을 함께 조회-->
+    <select id="readAllQuestionsByWorkbookId" parameterType="int" resultType="Question">
+        SELECT * FROM Question WHERE workbookId = #{workbookId}
+    </select>
+
+    <!-- 문제 수정 -->
+    <update id="updateQuestion" parameterType="Question">
+        <![CDATA[
+            UPDATE Question
+            SET questionQ = #{questionQ}, questionA = #{questionA},
+                questionType = #{questionType}, questionExplain = #{questionExplain},
+                questionDifficulty = #{questionDifficulty}, questionMaker = #{questionMaker},
+                questionSave = #{questionSave}, questionImg = #{questionImg}
+            WHERE questionId = #{questionId};
+        ]]>
+    </update>
+
+    <!-- 문제 삭제 -->
+    <delete id="deleteQuestion" parameterType="int">
+        DELETE FROM Question WHERE questionId = #{questionId}
+    </delete>
+
+</mapper>
