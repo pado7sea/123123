@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.UserQuestionRecordDao">
+    <!-- 유저 퀴즈 결과 입력 -->
+    <insert id="createUserQuestionRecord" parameterType="UserQuestionRecord">
+        INSERT INTO UserQuestionRecord (`questionId`, `userId`, `isCorrect`, `recordTime`)
+        VALUES (#{questionId}, #{userId}, #{isCorrect}, now())
+    </insert>
+
+    <!-- 유저 퀴즈 결과 조회 -->
+    <select id="readUserQuestionRecord" resultType="UserQuestionRecord">
+        SELECT *
+        FROM UserQuestionRecord
+        WHERE questionId = #{questionId} AND userId = #{userId}
+    </select>
+
+    <!--  유저 퀴즈 결과 수정  -->
+    <update id="updateUserQuestionRecord" parameterType="UserQuestionRecord">
+        UPDATE UserQuestionRecord
+        SET isCorrect = #{isCorrect}, recordTime = now()
+        WHERE questionId = #{questionId} AND userId = #{userId}
+    </update>
+
+
+</mapper>

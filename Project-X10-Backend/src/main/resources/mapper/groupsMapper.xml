@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.GroupsDao">
+    <!--  그룹 생성  -->
+    <insert id="insertGroups" parameterType="Groups" useGeneratedKeys="true" keyProperty="groupId">
+        INSERT INTO `group` (groupId, groupLeaderId, groupName, groupDetail, groupImg)
+        VALUES (0, #{groupLeaderId}, #{groupName}, #{groupDetail}, null)
+    </insert>
+
+    <!--  그룹 리더 아이디 조회  -->
+    <select id="selectGroupLeader" resultType="String" parameterType="int">
+        SELECT groupLeaderId
+        FROM `group`
+        WHERE groupId = #{groupId};
+    </select>
+
+    <!-- 그룹 멤버 추가 -->
+    <insert id="insertGroupMember">
+        INSERT INTO GroupMember (userId, groupId, isOnline)
+        VALUES (#{groupLeaderId}, #{groupId}, 0)
+    </insert>
+
+    <!--  그룹 상세정보 조회  -->
+    <select id="selectOne" parameterType="int">
+        SELECT *
+        FROM `group`
+        WHERE groupId = #{groupId};
+    </select>
+
+    <!--  유저 가입 그룹 전체 조회  -->
+    <select id="selectUserGroups" resultType="Groups" parameterType="String">
+        SELECT G.*
+        FROM `Group` G
+        JOIN GroupMember GM ON G.`groupId` = GM.`groupId`
+        WHERE GM.`userId` = #{userId};
+    </select>
+
+    <!--  그룹 내 유저 전체 조회  -->
+    <select id="selectAllUsers" resultType="GroupMember" parameterType="int">
+        SELECT userId
+        FROM GroupMember
+        WHERE groupId = #{groupId};
+    </select>
+
+    <select id="selectAllUsersInfo" resultType="User" parameterType="int">
+        SELECT User.userId, userName, userNickname, userImg, userSolvedQuestion, userLevel, isOnline
+        FROM User
+        INNER JOIN Groupmember ON User.userId = Groupmember.userId
+        WHERE groupId = #{groupId};
+    </select>
+
+    <!--  그룹 수정  -->
+    <update id="updateGroups" parameterType="Groups">
+        UPDATE `Group`
+        SET groupLeaderId = #{groupLeaderId}, groupName = #{groupName}, groupDetail = #{groupDetail}, groupImg =
+        #{groupImg}
+        WHERE groupId = #{groupId};
+    </update>
+
+    <update id="updateGroupsImg" parameterType="Groups">
+        UPDATE `Group`
+        SET groupImg = #{groupImg}
+        WHERE groupId = #{groupId};
+    </update>
+
+    <!--  그룹 삭제  -->
+    <delete id="deleteGroups" parameterType="int">
+        DELETE FROM `Groups` WHERE `groupId` = #{groupId};
+    </delete>
+
+    <!--  그룹원 초대  -->
+    <insert id="inviteUser">
+        INSERT INTO GroupMember (userId, groupId, isOnline)
+        VALUES (#{userId}, #{groupId}, 0);
+    </insert>
+
+    <!--  그룹원 탈퇴  -->
+    <delete id="quitGroup">
+        DELETE FROM GroupMember
+        WHERE userId = #{userId} AND groupId = #{groupId};
+    </delete>
+
+</mapper>

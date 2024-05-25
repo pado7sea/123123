@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.NoticeDao">
+    <!-- 알림 생성 -->
+    <insert id="insertNotice" parameterType="Notice">
+        INSERT INTO Notice (receiverId, noticeType, noticeTitle, noticeContent)
+        VALUES (#{receiverId}, #{noticeType}, #{noticeTitle}, #{noticeContent});
+    </insert>
+
+    <!-- 전체 알림 조회 -->
+    <select id="selectAllNotice" resultType="Notice" parameterType="String">
+        SELECT *
+        FROM Notice
+        WHERE receiverId = #{userId}
+    </select>
+
+    <!-- 알림 확인 -->
+    <update id="updateNotice" parameterType="int">
+        UPDATE Notice
+        SET
+        noticeCheck = 1
+        WHERE noticeId = #{noticeId}
+    </update>
+
+    <!-- 할 일 삭제 -->
+    <delete id="deleteNotice" parameterType="int">
+        DELETE FROM Notice
+        WHERE noticeId = #{noticeId}
+    </delete>
+</mapper>

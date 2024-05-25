@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ragtag.X10.model.dao.WorkbookDao">
+    <!--문제집 생성-->
+    <insert id="createWorkbook" parameterType="Workbook" useGeneratedKeys="true" keyProperty="workbookId">
+        INSERT INTO Workbook (workbookId, subjectId, workbookTitle, workbookDetail, workbookDeadline, workbookQuota)
+        VALUES (0, #{subjectId}, #{workbookTitle}, #{workbookDetail}, #{workbookDeadline}, #{workbookQuota});
+    </insert>
+
+    <!--문제집 할당량 생성-->
+    <insert id="createUserWorkbookQuota" parameterType="map">
+        INSERT INTO UserWorkbookQuota (userId, workbookId, isSubmit)
+        VALUES (#{userId, jdbcType=VARCHAR}, #{workbookId, jdbcType=INTEGER}, 0)
+    </insert>
+
+    <!--문제집 상세정보 조회-->
+    <select id="readWorkbookById" resultType="Workbook" parameterType="int">
+        SELECT *
+        FROM Workbook
+        WHERE workbookId = #{workbookId}
+    </select>
+
+    <!--과목 내 문제집 조회-->
+    <select id="readAllWorkbooksBySubjectId" resultType="Workbook" parameterType="int">
+        SELECT *
+        FROM Workbook
+        WHERE subjectId = #{subjectId}
+    </select>
+
+    <!--최근에 만들어진 문제집 : 유저가 속한 모든 그룹의 모든 과목의 최신 문제집 가져오기-->
+    <select id="getRecentCreatedWorkbooksByUserId" resultType="Workbook" parameterType="string">
+        SELECT w.* FROM Workbook w
+        INNER JOIN Subject s ON w.subjectId = s.subjectId
+        WHERE s.groupId IN (
+            SELECT groupId FROM GroupMember gm
+            WHERE gm.userId = #{userId}
+        )
+        ORDER BY w.workbookDate DESC
+        LIMIT 3; <!-- 최근 3개만 조회 -->
+    </select>
+
+    <!-- 최근에 푼 문제집 : 유저가 속한 모든 그룹의 모든 문제집의 최근 푼 문제집 가져오기 -->
+    <select id="getRecentSolvedWorkbooksByUserId" resultType="Workbook" parameterType="string">
+        SELECT DISTINCT w.*
+        FROM Workbook w
+        INNER JOIN Subject s ON w.subjectId = s.subjectId
+        INNER JOIN Question q ON w.workbookId = q.workbookId
+        LEFT JOIN UserQuestionRecord uqr ON q.questionId = uqr.questionId AND uqr.userId = #{userId}
+        WHERE s.groupId IN (SELECT groupId FROM GroupMember gm WHERE gm.userId = #{userId})
+            AND uqr.userId IS NOT NULL -- 사용자가 푼 문제가 있는 문제만 필터링
+        GROUP BY w.workbookId
+        ORDER BY MAX(uqr.recordTime) DESC
+        LIMIT 3;
+    </select>
+
+
+    <!--문제집 수정-->
+    <update id="updateWorkbook" parameterType="Workbook">
+        UPDATE Workbook
+        SET workbookTitle = #{workbookTitle}, workbookDetail = #{workbookDetail},
+         workbookDeadline = #{workbookDeadline}, workbookQuota = #{workbookQuota}
+        WHERE workbookId = #{workbookId}
+    </update>
+
+    <!--문제집 삭제-->
+    <delete id="deleteWorkbook" parameterType="int">
+        DELETE FROM Workbook
+        WHERE workbookId = #{workbookId}
+    </delete>
+</mapper>
