@@ -1,3 +1,6 @@
+![image](https://github.com/pado7sea/123123/assets/140683237/b41cbeda-e5fd-4f34-a74d-c7a7dab51b92)
+
+
 - 2023.12.11 ~ 2023.12.30 (3주) , 5인
 - Java, SpringBoot, MySQL, Gradle
 - 공부한 내용을 바탕으로 문제를 만들어 온 뒤, 스터디 그룹원과 함께 동시에 문제를 풀어보며 실력을 늘리자!
